@@ -1,0 +1,828 @@
+{
+  "name": "Main",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        192
+      ],
+      "id": "7882a8c2-5fe9-47df-8257-38ae3f1172c0",
+      "name": "Cohere Chat Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "s57DRGf8sTC38S3K",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"codigo\": {\n      \"type\": \"string\",\n      \"description\": \"Código identificador único (ej: REQ-BACKEND-GO-01)\"\n    },\n    \"resumen\": {\n      \"type\": \"string\",\n      \"description\": \"Síntesis ejecutiva breve del requerimiento\"\n    },\n    \"rol\": {\n      \"type\": \"string\",\n      \"description\": \"Título del puesto\"\n    },\n    \"nivel_experiencia\": {\n      \"type\": \"string\",\n      \"description\": \"Nivel de experiencia solicitado\"\n    },\n    \"habilidades_mandatorias\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" },\n      \"description\": \"Habilidades obligatorias\"\n    },\n    \"habilidades_opcionales\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" },\n      \"description\": \"Habilidades deseables\"\n    },\n    \"palabras_clave_busqueda\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" },\n      \"description\": \"Palabras clave técnicas para prospección\"\n    }\n  },\n  \"required\": [\n    \"codigo\",\n    \"resumen\",\n    \"rol\",\n    \"nivel_experiencia\",\n    \"habilidades_mandatorias\",\n    \"palabras_clave_busqueda\"\n  ]\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        176
+      ],
+      "id": "c33ed797-5154-4814-906d-83fa667aa040",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        288
+      ],
+      "id": "df0d67ad-3a73-4dfb-81c9-6d4439cb665a",
+      "name": "Cohere Chat Model1",
+      "credentials": {
+        "cohereApi": {
+          "id": "s57DRGf8sTC38S3K",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "REQUERIMIENTO\n",
+        "height": 496,
+        "width": 768,
+        "color": "#06064D"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        -64
+      ],
+      "id": "030a1cd8-4fb2-4b9c-b12e-f7e4a33e73d7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        496,
+        160
+      ],
+      "id": "664a8e84-d24e-46b7-9912-a42c2ee67aeb",
+      "name": "Cohere Chat Model2",
+      "credentials": {
+        "cohereApi": {
+          "id": "s57DRGf8sTC38S3K",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"candidatos_evaluados\": [\n    {\n      \"nombre\": \"string\",\n      \"afinidad_porcentaje\": 85,\n      \"disponibilidad_porcentaje\": 50,\n      \"es_apto\": true,\n      \"justificacion\": \"string\"\n    }\n  ],\n  \"hay_candidatos_aptos\": true\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        720,
+        176
+      ],
+      "id": "81627a27-577f-415b-b97c-ba34b5bd6800",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "content": "Buscar candidatos internos",
+        "height": 416,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "cda8b2dc-74cc-4fdd-81c2-63807ffb6e96",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aa626fa8-1ebe-439e-bbdd-2a2b9e19b276",
+              "leftValue": "={{ $json.output.apto }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        -208
+      ],
+      "id": "27e87025-36fe-4da6-926c-23aa76bae86c",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        976,
+        80
+      ],
+      "id": "f93429cb-5232-40a1-9047-f2c628221ac4",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"api_key\": \"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\",\n  \"query\": \"site:linkedin.com/in/ {{ $('AI Agent - Procesar requerimiento').first().json.output.rol }} {{ $('AI Agent - Procesar requerimiento').first().json.output.palabras_clave_busqueda.slice(0, 2).join(' ') }} Peru -jobs -empleos\",\n  \"search_depth\": \"basic\",\n  \"max_results\": 3\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1200,
+        80
+      ],
+      "id": "76dc051e-3c06-4ecf-8d7f-93f1820dee74",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nlet combinedResults = [];\n\nfor (const item of items) {\n  if (item.json.results && Array.isArray(item.json.results)) {\n    combinedResults.push(...item.json.results);\n  }\n}\n\nreturn combinedResults.map(res => {\n  const url = res.url || \"\";\n  const rawTitle = res.title || \"\";\n  const candidateName = rawTitle.split(/[-–|:•]/)[0].trim();\n\n  let fuente = \"Web\";\n  if (url.includes(\"linkedin.com\")) fuente = \"LinkedIn\";\n  else if (url.includes(\"getonbrd.com\")) fuente = \"Get on Board\";\n  else if (url.includes(\"torre.ai\")) fuente = \"Torre\";\n\n  return {\n    json: {\n      nombre_candidato: candidateName || \"Candidato Externo\",\n      perfil_url: url,\n      extracto: res.content || \"\",\n      fuente: fuente,\n      origen: \"Externo\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        96
+      ],
+      "id": "870decbb-01ed-44aa-8c05-1bf1cb105b9d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=REQUERIMIENTO:\nRol: {{ $('AI Agent - Procesar requerimiento').first().json.output.rol }}\nTecnologías requeridas: {{ $('AI Agent - Procesar requerimiento').first().json.output.palabras_clave_busqueda.join(', ') }}\n\nCANDIDATO:\nNombre: {{ $json.nombre_candidato }}\nPerfil: {{ $json.perfil_url }}\nExtracto: {{ $json.extracto }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres un evaluador técnico de talento.\nAnaliza el extracto profesional del candidato recuperado de la web frente al requerimiento técnico.\nCalcula un porcentaje de afinidad técnica (número entero entre 80 y 100) y redacta un resumen ejecutivo formal de 1 parrafo lo mas preciso y breve posible (3 lineas) justificando la compatibilidad del candidato con el puesto.\nNO USES EMOJIS NI ICONOS. SOLAMENTE TEXTO Y EN PROSA\nResponde únicamente con el esquema JSON."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1744,
+        96
+      ],
+      "id": "6086112e-6424-4b59-8464-a9c67b96fc8e",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        304
+      ],
+      "id": "f5b2eafb-aa3b-4624-a8fd-96250fafaeb4",
+      "name": "Cohere Chat Model3",
+      "credentials": {
+        "cohereApi": {
+          "id": "s57DRGf8sTC38S3K",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"porcentaje_afinidad_tecnica\": {\n      \"type\": \"number\",\n      \"description\": \"Porcentaje de afinidad de 0 a 100\"\n    },\n    \"resumen_ejecutivo\": {\n      \"type\": \"string\",\n      \"description\": \"Resumen ejecutivo formal\"\n    }\n  },\n  \"required\": [\"porcentaje_afinidad_tecnica\", \"resumen_ejecutivo\"]\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        272
+      ],
+      "id": "40f4db26-2bb2-4f95-8103-a7b333ee8aaa",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        432
+      ],
+      "id": "86a13b21-6aab-40eb-8f82-5d915db18cf6",
+      "name": "Cohere Chat Model4",
+      "credentials": {
+        "cohereApi": {
+          "id": "s57DRGf8sTC38S3K",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"api_key\": \"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\",\n  \"query\": \"{{ $('AI Agent - Procesar requerimiento').first().json.output.palabras_clave_busqueda[0] }} Backend Peru\",\n  \"search_depth\": \"basic\",\n  \"include_domains\": [\n    \"getonbrd.com\",\n    \"torre.ai\"\n  ],\n  \"max_results\": 2\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1200,
+        320
+      ],
+      "id": "c0a0435d-1899-4d01-abc2-0776e1b83763",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1408,
+        96
+      ],
+      "id": "98a812a4-ac16-496e-9dd0-e19c347dbad5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "3f8733b0-4bd7-809d-a6ad-000bf0fb8b20",
+          "mode": "list",
+          "cachedResultName": "Requerimientos",
+          "cachedResultUrl": "https://app.notion.com/p/3f8733b04bd78098a110fed35f677428"
+        },
+        "title": "={{ $json.output.codigo }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Mensaje|rich_text",
+              "textContent": "={{ $('Recibir requerimiento').item.json.chatInput }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        192,
+        -16
+      ],
+      "id": "72682ffe-d309-4a67-b405-0805d40b8d0b",
+      "name": "Create a database page2",
+      "credentials": {
+        "notionApi": {
+          "id": "o8NvyXOIj6hT2QYb",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -400,
+        -16
+      ],
+      "id": "58882938-31b5-45a5-86da-0d893f40d94b",
+      "name": "Recibir requerimiento",
+      "webhookId": "fb96967b-074a-457a-99e4-5f52417b9210"
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres el Agente Analista de Requerimientos. Tu función es descomponer el requerimiento técnico recibido y estructurarlo exactamente en el esquema JSON solicitado, separando habilidades mandatorias, opcionales, nivel de experiencia y palabras clave de búsqueda.\n\nAdemás, debes generar:\n1. \"codigo\": Un identificador único y formal en mayúsculas basado en el rol y la tecnología principal (ejemplo: REQ-BACKEND-GO-01).\n2. \"resumen\": Una síntesis breve y ejecutiva de una o dos oraciones con el objetivo de la búsqueda técnica."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -176,
+        -16
+      ],
+      "id": "2c9dc395-d7fc-4aee-9dee-bba12b911af4",
+      "name": "AI Agent - Procesar requerimiento"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "3f7733b0-4bd7-8070-bb48-000bca0d4e1e",
+          "mode": "list",
+          "cachedResultName": "Colaboradores",
+          "cachedResultUrl": "https://app.notion.com/p/3f7733b04bd780418173c5e0ef68ddf0"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Estado|select",
+              "condition": "equals",
+              "optionValue": "Activo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        384,
+        -16
+      ],
+      "id": "d7d6116e-284e-4a1e-ae0f-3886d6c74536",
+      "name": "Obtener cantidatos internos",
+      "credentials": {
+        "notionApi": {
+          "id": "o8NvyXOIj6hT2QYb",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=REQUERIMIENTO TÉCNICO:\n{{ JSON.stringify($('AI Agent - Procesar requerimiento').first().json.output) }}\n\nDATOS DEL COLABORADOR:\nNombre: {{ $json.property_nombre_completo }}\nNivel de experiencia: {{ $json.property_nivel_de_experiencia }}\nHabilidades: {{ JSON.stringify($json.property_habilidades) }}\nDisponibilidad horaria: {{ $json.property_disponibilidad_horaria }}\nProyectos vigentes: {{ $json.property_proyectos_vigentes }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres el Agente de Talento Interno, auditor de capital humano de la organización.\nTu función es recibir el requerimiento técnico y la lista de colaboradores disponibles obtenidos de la base de datos.\nDebes:\n1. Comparar las habilidades de cada colaborador frente a las habilidades mandatorias del requerimiento.\n2. Asignar un porcentaje de afinidad técnica (0 a 100%) para cada colaborador según su coincidencia técnica y nivel.\n3. Determinar si es apto (afinidad >= 80% y disponibilidad horaria > 0%).\n4. Proveer una breve justificación técnica de la evaluación."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        576,
+        -16
+      ],
+      "id": "0fbf8e55-ed6d-472b-9149-29e9cce148be",
+      "name": "AI Agent - Evaluador"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "3f7733b0-4bd7-8043-b6ab-000bf50bbe83",
+          "mode": "list",
+          "cachedResultName": "Porspeccion resultados",
+          "cachedResultUrl": "https://app.notion.com/p/3f7733b04bd78062875ddb86d39e7d40"
+        },
+        "title": "={{ $json.output.colaborador }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Origen|select",
+              "selectValue": "Talento interno"
+            },
+            {
+              "key": "Perfil|url",
+              "urlValue": "=null"
+            },
+            {
+              "key": "Resumen ejecutivo|rich_text",
+              "textContent": "={{ $json.output.justificacion_tecnica }}"
+            },
+            {
+              "key": "Porcentaje de afinidad|number",
+              "numberValue": "={{ $json.output.porcentaje_afinidad_tecnica /100}}"
+            },
+            {
+              "key": "Requerimiento|relation",
+              "relationValue": [
+                "{{ $('Create a database page2').first().json.id }}"
+              ]
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        2016,
+        -352
+      ],
+      "id": "104fb4f3-fea6-446a-87a9-aa33dcfc4418",
+      "name": "Registrar candidato interno",
+      "credentials": {
+        "notionApi": {
+          "id": "o8NvyXOIj6hT2QYb",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "3f7733b0-4bd7-8043-b6ab-000bf50bbe83",
+          "mode": "list",
+          "cachedResultName": "Porspeccion resultados",
+          "cachedResultUrl": "https://app.notion.com/p/3f7733b04bd78062875ddb86d39e7d40"
+        },
+        "title": "={{ $('Code in JavaScript').item.json.nombre_candidato }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Origen|select",
+              "selectValue": "={{ $('Code in JavaScript').item.json.fuente }}"
+            },
+            {
+              "key": "Perfil|url",
+              "urlValue": "={{ $('Code in JavaScript').item.json.perfil_url }}"
+            },
+            {
+              "key": "Resumen ejecutivo|rich_text",
+              "textContent": "={{ $json.output.resumen_ejecutivo }}"
+            },
+            {
+              "key": "Porcentaje de afinidad|number",
+              "numberValue": "={{ $json.output.porcentaje_afinidad_tecnica /100}}"
+            },
+            {
+              "key": "Requerimiento|relation",
+              "relationValue": [
+                "={{ $('Create a database page2').first().json.id }}"
+              ]
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        2016,
+        -160
+      ],
+      "id": "189a4024-66f5-4fed-bf81-a079e535451d",
+      "name": "Registrar candidatos externos",
+      "credentials": {
+        "notionApi": {
+          "id": "o8NvyXOIj6hT2QYb",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Busqueda de candidatos externos",
+        "height": 528,
+        "width": 1216,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        32
+      ],
+      "typeVersion": 1,
+      "id": "6aad5b57-7d7a-431d-8fac-67b96429cca6",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "Registrar candidatos iniciales",
+        "height": 416,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1968,
+        -400
+      ],
+      "typeVersion": 1,
+      "id": "45511418-59e0-4198-88bf-5f6985fbfc4e",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Cohere Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Procesar requerimiento",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent - Procesar requerimiento",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Evaluador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent - Evaluador",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Registrar candidato interno",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Registrar candidatos externos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a database page2": {
+      "main": [
+        [
+          {
+            "node": "Obtener cantidatos internos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recibir requerimiento": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Procesar requerimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Procesar requerimiento": {
+      "main": [
+        [
+          {
+            "node": "Create a database page2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener cantidatos internos": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Evaluador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Evaluador": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e7355bc4-1502-4b9c-a612-7c5f55837d62",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9e93091d64cdc1058924b1e09e64fb1d49d2b08c224b29478facef6d7b86c6f6"
+  },
+  "nodeGroups": [],
+  "id": "6C7d4Ez58sH2IgCo",
+  "tags": []
+}
